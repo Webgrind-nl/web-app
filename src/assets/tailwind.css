@@ -1,0 +1,7 @@
+/* src/assets/tailwind.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Add Flowbite styles */
+@import "flowbite";
