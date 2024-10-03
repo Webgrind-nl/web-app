@@ -10,33 +10,35 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '18'
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
 
-    - name: Install dependencies
-      run: npm install
+      - name: Install dependencies
+        run: npm install
 
-    - name: Build the Vue.js app
-      run: npm run build
+      - name: Build the Vue.js app
+        run: npm run build
 
-    - name: Copy files via SSH
-      env:
-        SSH_KEY: ${{ secrets.DO_SERVER_SSH_KEY }}
-      run: |
-        mkdir -p ~/.ssh
-        echo "$SSH_KEY" > ~/.ssh/id_ed25519
-        chmod 600 ~/.ssh/id_ed25519
+      - name: Add droplet to known_hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -H 164.92.154.140 >> ~/.ssh/known_hosts
 
-        # Kopieer de bestanden naar de droplet
-        scp -r dist/* root@164.92.154.140:/var/www/webgrind
+      - name: Copy files via SSH
+        env:
+          SSH_KEY: ${{ secrets.DO_SERVER_SSH_KEY }}
+        run: |
+          echo "$SSH_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          scp -r dist/* root@164.92.154.140:/var/www/webgrind
 
-    - name: Restart Nginx on the server
-      env:
-        SSH_KEY: ${{ secrets.DO_SERVER_SSH_KEY }}
-      run: |
-        ssh -o StrictHostKeyChecking=no root@164.92.154.140 'sudo systemctl restart nginx'
+      - name: Restart Nginx on the server
+        env:
+          SSH_KEY: ${{ secrets.DO_SERVER_SSH_KEY }}
+        run: |
+          ssh -o StrictHostKeyChecking=no root@164.92.154.140 'sudo systemctl restart nginx'
