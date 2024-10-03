@@ -24,21 +24,20 @@ jobs:
       - name: Build the Vue.js app
         run: npm run build
 
-      - name: Add droplet to known_hosts
+      - name: Configure SSH key
         run: |
           mkdir -p ~/.ssh
+          echo "${{ secrets.DO_SERVER_SSH_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+
+      - name: Add droplet to known_hosts
+        run: |
           ssh-keyscan -H 164.92.154.140 >> ~/.ssh/known_hosts
 
       - name: Copy files via SSH
-        env:
-          SSH_KEY: ${{ secrets.DO_SERVER_SSH_KEY }}
         run: |
-          echo "$SSH_KEY" > ~/.ssh/id_ed25519
-          chmod 600 ~/.ssh/id_ed25519
-          scp -r dist/* root@164.92.154.140:/var/www/webgrind
+          scp -o StrictHostKeyChecking=no -i ~/.ssh/id_ed25519 -r dist/* root@164.92.154.140:/var/www/webgrind
 
       - name: Restart Nginx on the server
-        env:
-          SSH_KEY: ${{ secrets.DO_SERVER_SSH_KEY }}
         run: |
-          ssh -o StrictHostKeyChecking=no root@164.92.154.140 'sudo systemctl restart nginx'
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_ed25519 root@164.92.154.140 'sudo systemctl restart nginx'
