@@ -1,39 +1,39 @@
 <template>
-  <nav class="navbar sticky top-0 w-full z-20 border-b border-transparent dark:border-gray-600">
-    <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-      <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
-        <img src="../assets/webgrindlogonotext.svg" class="h-12" alt="Webgrind Logo">
-        <img src="../assets/webgrindtextonly.svg" class="h-4" alt="Webgrind Logo">
+  <nav class="navbar">
+    <div class="navbar-container">
+      <a href="#" class="logo">
+        <img
+          src="../assets/webgrindlogonotext.svg"
+          class="logo-img"
+          alt="Webgrind Logo"
+        />
+        <img
+          src="../assets/webgrindtextonly.svg"
+          class="logo-text"
+          alt="Webgrind Text Logo"
+        />
       </a>
-      <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-        <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Get started</button>
-        <button data-collapse-toggle="navbar-sticky" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-sticky" aria-expanded="false">
-          <span class="sr-only">Open main menu</span>
-          <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
-          </svg>
-        </button>
-      </div>
-      <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
-        <ul class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-transparent rounded-lg bg-transparent md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 dark:bg-transparent dark:border-transparent">
-          <li>
-            <a href="#" class="block py-2 px-3 text-white rounded hover:bg-gray-700 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:hover:bg-gray-700 dark:hover:text-white">Home</a>
-          </li>
-          <li>
-            <a href="#" class="block py-2 px-3 text-white rounded hover:bg-gray-700 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:hover:bg-gray-700 dark:hover:text-white">About Us</a>
-          </li>
-          <li>
-            <a href="#" class="block py-2 px-3 text-white rounded hover:bg-gray-700 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:hover:bg-gray-700 dark:hover:text-white">Services</a>
-          </li>
-          <li>
-            <a href="#" class="block py-2 px-3 text-white rounded hover:bg-gray-700 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:hover:bg-gray-700 dark:hover:text-white">Contact</a>
-          </li>
-          <li>
-            <a href="#" class="block py-2 px-3 text-white rounded hover:bg-gray-700 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:hover:bg-gray-700 dark:hover:text-white">Portfolio</a>
-          </li>
-          <li>
-            <a href="#" class="block py-2 px-3 text-white rounded hover:bg-gray-700 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:hover:bg-gray-700 dark:hover:text-white">FAQ</a>
-          </li>
+      <button
+        class="burger"
+        @click="toggleMenu"
+        aria-controls="navbar-content"
+        aria-expanded="menuOpen"
+      >
+        <span class="burger-line"></span>
+        <span class="burger-line"></span>
+        <span class="burger-line"></span>
+      </button>
+      <div
+        :class="{ 'nav-links': true, 'nav-active': menuOpen }"
+        id="navbar-content"
+      >
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Services</a></li>
+          <li><a href="#">Portfolio</a></li>
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#">Contact</a></li>
         </ul>
       </div>
     </div>
@@ -41,28 +41,152 @@
 </template>
 
 <script setup>
-// Your existing script here
+import { ref } from 'vue';
+
+const menuOpen = ref(false);
+
+function toggleMenu() {
+  menuOpen.value = !menuOpen.value;
+}
 </script>
 
 <style scoped>
+/* Apply the same gradient as the page */
+body,
+
+/* Navbar Styling */
 .navbar {
-  position: sticky;
-  top: 0;
-  z-index: 20; /* Ensure it stays above other content */
-  background: linear-gradient(135deg, #162945, #0a0a0a); /* Same gradient as the background */
-  background-attachment: fixed; /* Makes the gradient stay fixed in the background */
-  padding: 15px 20px;
   width: 100%;
-  transition: all 0.3s ease-in-out; /* Smooth transition for background */
+  position: sticky; /* Make it sticky */
+  top: 0;
+  left: 0;
+  background: linear-gradient(135deg, #162945, #0a0a0a);
+  z-index: 1000;
+  background-attachment: fixed; /* Ensure the gradient stays fixed */
+  padding: 10px 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: background 0.3s ease-in-out, transform 0.3s ease;
 }
 
-.navbar a {
-  color: white; /* Text color */
-  transition: color 0.3s ease; /* Smooth transition for color */
+/* Navbar Container */
+.navbar-container {
+  max-width: 1200px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  margin: auto;
 }
 
-.navbar a:hover {
-  color: lightgray; /* Hover effect */
-  text-decoration: underline; /* Underline on hover */
+/* Logo Styling */
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo-img {
+  height: 35px;
+}
+
+.logo-text {
+  padding-left: 10px;
+  height: 18px;
+}
+
+/* Navbar Links */
+.nav-links {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100%;
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease;
+}
+
+.nav-links ul {
+  display: flex;
+  list-style: none;
+  gap: 20px;
+}
+
+.nav-links ul li {
+  padding: 10px;
+}
+
+.nav-links ul li a {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 500;
+  position: relative;
+  transition: color 0.3s ease-in-out;
+}
+
+/* Hover Effect for Links */
+.nav-links ul li a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  width: 0%;
+  height: 2px;
+  background: linear-gradient(45deg, #835aff, #5ec8f7);
+  transition: width 0.3s ease-in-out;
+}
+
+.nav-links ul li a:hover::after {
+  width: 100%;
+}
+
+/* Burger Menu Styling */
+.burger {
+  display: none;
+  cursor: pointer;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 30px;
+  height: 21px;
+  background: none;
+  border: none;
+}
+
+.burger-line {
+  width: 100%;
+  height: 3px;
+  background: #ffffff;
+  transition: all 0.3s ease-in-out;
+}
+
+.burger:hover .burger-line {
+  background: #5ec8f7;
+}
+
+/* Mobile & Dynamic Island Support */
+@media screen and (max-width: 768px) {
+  .burger {
+    display: flex;
+  }
+
+  .nav-links {
+    position: absolute;
+    top: 50px;
+    left: 0;
+    width: 100%;
+    height: 0;
+    overflow: hidden;
+    background: rgba(0, 0, 0, 0.9);
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.5s ease;
+  }
+
+  .nav-links ul {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .nav-links.nav-active {
+    height: auto;
+    transform: translateY(0%);
+    opacity: 1;
+  }
 }
 </style>
