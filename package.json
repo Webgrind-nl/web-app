@@ -1,5 +1,5 @@
 {
-  "name": "rmcreations",
+  "name": "Webgrind",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -10,6 +10,8 @@
     "core-js": "^3.8.3",
     "flowbite": "^2.4.1",
     "gradients-bg": "github:baunov/gradients-bg",
+    "tsparticles": "^3.5.0",
+    "tsparticles-engine": "^2.12.0",
     "vue": "^3.2.13",
     "vue-class-component": "^8.0.0-0"
   },

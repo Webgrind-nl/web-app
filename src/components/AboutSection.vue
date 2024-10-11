@@ -8,13 +8,16 @@
       @click="openModal(service, $event)"
     >
       <div class="icon animate-3d">{{ service.icon }}</div>
-      <h3>{{ service.title }}</h3>
+      <h1 class="title">{{ service.title }}</h1>
       <p>{{ service.description }}</p>
     </div>
 
     <!-- Modal for displaying more information -->
     <div v-if="modalService" class="modal-overlay" @click.self="closeModal">
-      <div class="modal-content" :class="{'elegant-pop-up': isOpen, 'elegant-pop-close': isClosing}">
+      <div
+        class="modal-content"
+        :class="{ 'elegant-pop-up': isOpen, 'elegant-pop-close': isClosing }"
+      >
         <button class="close-button" @click="closeModal">&times;</button>
         <div class="modal-icon animate-3d">{{ modalService.icon }}</div>
         <h2>{{ modalService.title }}</h2>
@@ -25,45 +28,51 @@
 </template>
 
 <script setup>
-import { ref, onMounted, nextTick } from 'vue';
+import { ref, onMounted, nextTick } from "vue";
 
 const services = [
   {
-    title: "Web Development",
-    description: "Building responsive and robust websites.",
+    title: "Webontwikkeling",
+    description: "Ontwikkelen van responsieve en robuuste websites.",
     icon: "🌐",
-    fullDescription: "We specialize in creating highly scalable, SEO-friendly, and visually appealing websites tailored to your needs."
+    fullDescription:
+      "Wij zijn gespecialiseerd in het bouwen van schaalbare, SEO-vriendelijke en visueel aantrekkelijke websites die volledig zijn afgestemd op jouw bedrijfsdoelen. Onze weboplossingen zorgen voor optimale prestaties op elk apparaat, zodat jouw online aanwezigheid sterk en gebruiksvriendelijk is.",
   },
   {
-    title: "Mobile Apps",
-    description: "Developing intuitive mobile applications.",
+    title: "Mobiele Apps",
+    description: "Ontwikkelen van gebruiksvriendelijke mobiele applicaties.",
     icon: "📱",
-    fullDescription: "Our team develops powerful mobile apps with seamless user experiences, targeting both Android and iOS platforms."
+    fullDescription:
+      "Ons team ontwikkelt krachtige mobiele apps met naadloze gebruikerservaringen, gericht op zowel Android- als iOS-platforms. Van concept tot publicatie zorgen wij ervoor dat jouw app gebruiksvriendelijk, intuïtief en geoptimaliseerd is voor maximale prestaties.",
   },
   {
-    title: "UI/UX Design",
-    description: "Crafting engaging user experiences.",
+    title: "UI/UX Ontwerp",
+    description: "Creëren van boeiende gebruikerservaringen.",
     icon: "🎨",
-    fullDescription: "We focus on intuitive UI/UX design, ensuring that your customers have a delightful experience navigating your products."
+    fullDescription:
+      "Wij richten ons op het ontwerpen van intuïtieve UI/UX-interfaces die zorgen voor een aantrekkelijke en gebruiksvriendelijke ervaring. Ons ontwerpteam werkt nauw samen met jou om de perfecte balans te vinden tussen esthetiek en functionaliteit, zodat jouw digitale product naadloos aansluit bij de behoeften van jouw gebruikers.",
   },
   {
-    title: "SEO Optimization",
-    description: "Improving search engine visibility.",
+    title: "SEO Optimalisatie",
+    description: "Verbeteren van zichtbaarheid in zoekmachines.",
     icon: "🚀",
-    fullDescription: "Our SEO services help your website rank higher, driving organic traffic and boosting your online presence."
+    fullDescription:
+      "Onze SEO-diensten helpen jouw website hoger te scoren in zoekmachines zoals Google, wat resulteert in meer organisch verkeer en een grotere online zichtbaarheid. We implementeren strategieën op maat, zoals technische optimalisaties, contentcreatie en linkbuilding, om jouw bedrijf te laten opvallen in de zoekresultaten.",
   },
   {
-    title: "Cloud Solutions",
-    description: "Deploying scalable cloud infrastructures.",
+    title: "Cloudoplossingen",
+    description: "Implementeren van schaalbare cloudinfrastructuren.",
     icon: "☁️",
-    fullDescription: "We offer reliable and scalable cloud infrastructure solutions, ensuring smooth performance for your business."
+    fullDescription:
+      "Wij bieden betrouwbare en schaalbare cloudoplossingen die de prestaties van jouw bedrijf naar een hoger niveau tillen. Of het nu gaat om dataopslag, serverbeheer of cloudmigratie, wij zorgen voor veilige en efficiënte cloudinfrastructuren die voldoen aan jouw bedrijfsbehoeften. Onze cloudoplossingen zorgen ervoor dat jouw applicaties soepel draaien en eenvoudig kunnen worden opgeschaald bij groei.",
   },
   {
-    title: "IT Consulting",
-    description: "Providing strategic IT advice.",
+    title: "IT-Consultancy",
+    description: "Verstrekken van strategisch IT-advies.",
     icon: "💡",
-    fullDescription: "We provide IT consulting services to help businesses make informed technology decisions."
-  }
+    fullDescription:
+      "Wij bieden strategisch IT-advies om jouw bedrijf te helpen slimme technologische beslissingen te nemen. Of het nu gaat om het optimaliseren van bestaande systemen, het implementeren van nieuwe technologieën of het waarborgen van IT-beveiliging, ons team van experts staat klaar om jou te ondersteunen. We helpen je bij het opstellen van een toekomstbestendige IT-strategie die jouw bedrijfsdoelstellingen ondersteunt.",
+  },
 ];
 
 const modalService = ref(null);
@@ -79,7 +88,7 @@ const openModal = (service) => {
 const closeModal = () => {
   isClosing.value = true;
   isOpen.value = false;
-  
+
   setTimeout(() => {
     modalService.value = null;
     isClosing.value = false; // Reset after animation ends
@@ -101,7 +110,7 @@ onMounted(() => {
 });
 </script>
 
-<style scoped>
+<style>
 /* Container Styling */
 .service-cards-container {
   display: flex;
@@ -119,36 +128,37 @@ onMounted(() => {
   max-width: 550px;
   padding: 40px;
   border-radius: 15px;
-  background: linear-gradient(135deg, #6a0dad, #d16ba5, #45aaf2);
+  background: linear-gradient(0deg, #181a35, #2a2c5c);
   color: white;
   text-align: center;
   box-shadow: 0 15px 25px rgba(0, 0, 0, 0.15);
   opacity: 0;
-  transform: scale(0.9) translateY(50px) rotate(-2deg);
-  transition: opacity 1s ease, transform 1s ease, box-shadow 0.3s ease;
+  transform: scale(1) translateY(50px) rotate(0deg);
   cursor: pointer;
+
+  transition: transform 0.5s ease, box-shadow 0.5s ease, opacity 1s ease;
 }
 
-/* Hover Effect */
-.service-card:hover {
-  transform: scale(1.05) translateY(0);
-  box-shadow: 0 20px 30px rgba(0, 0, 0, 0.3);
+.service-cards-container .service-card:hover {
+  transform: scale(1.02) translateY(-10px); /* Increase size significantly */
+  box-shadow: 0 25px 45px rgba(131, 90, 255, 0.4); /* Bigger shadow */
+  z-index: 2; /* Bring it to the front */
 }
 
-/* Visible Class for Scroll Animation */
+/* Smooth Appear Animation */
 .service-card.visible {
   opacity: 1;
   transform: scale(1) translateY(0) rotate(0deg);
-  animation: float 3s ease-in-out infinite;
 }
 
 /* Floating Effect */
 @keyframes float {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0);
   }
   50% {
-    transform: translateY(-10px);
+    transform: translatey(-10px);
   }
 }
 
@@ -243,5 +253,18 @@ onMounted(() => {
 
 .close-button:hover {
   color: red;
+}
+
+.title {
+  background: linear-gradient(
+    135deg,
+    #9a4fda,
+    #e89ac4,
+    #7cc4f5
+  ); /* Gradient colors */
+  -webkit-background-clip: text; /* Clip the background to text for Webkit browsers */
+  background-clip: text; /* Standard background clip */
+  color: transparent; /* Make text color transparent to show gradient */
+  font-size: 24px;
 }
 </style>

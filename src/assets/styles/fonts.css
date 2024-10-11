@@ -1,6 +1,6 @@
 @font-face {
-    font-family: 'Webgrind'; /* Give your font a name */
-    src: url('../fonts/Montserrat-ExtraLight.ttf') format('truetype'); /* Path to your TTF file */
-    font-weight: normal; /* Adjust as needed */
-    font-style: normal; /* Adjust as needed */
+  font-family: 'Webgrind'; /* Give your font a name */
+  src: url('../fonts/Montserrat-ExtraLight.ttf') format('truetype'); /* Path to your TTF file */
+  font-weight: normal; /* Adjust as needed */
+  font-style: normal; /* Adjust as needed */
 }
