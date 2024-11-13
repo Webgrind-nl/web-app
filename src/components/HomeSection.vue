@@ -5,18 +5,24 @@
       Van visionaire ideeën tot sterke realisaties: wij bouwen de digitale basis
       voor jouw groei
     </p>
-    <a href="#services" class="btn" @click="scrollToServices"
-      >Bekijk Onze Diensten</a
-    >
+    <a href="#" @click.prevent="scrollToNextSection" class="btn">
+      Scroll Down
+    </a>
   </div>
 </template>
 
-<script setup>
-const scrollToServices = () => {
-  const servicesSection = document.querySelector("#services");
-  if (servicesSection) {
-    servicesSection.scrollIntoView({ behavior: "smooth" });
-  }
+<script>
+export default {
+  name: 'HomeSection',
+  methods: {
+    scrollToNextSection() {
+      // Directly scroll to the next section (AboutSection)
+      const aboutSection = document.querySelector('#aboutSection');
+      if (aboutSection) {
+        aboutSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    },
+  },
 };
 </script>
 
@@ -67,7 +73,7 @@ const scrollToServices = () => {
   text-shadow: 0 0 10px #d16ba5, 0 0 20px #45aaf2;
 }
 
-.hero span:hover {
+.hero span:hover:focus {
   background: linear-gradient(
     135deg,
     #9a4fda,
@@ -93,7 +99,7 @@ const scrollToServices = () => {
   cursor: pointer;
 }
 
-.btn:hover {
+.btn:hover:focus {
   transform: translateY(-5px) scale(1.05);
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
 }

@@ -7,7 +7,7 @@
       ref="cards"
       @click="openModal(service, $event)"
     >
-      <div class="icon animate-3d">{{ service.icon }}</div>
+      <div class="modal-icon">{{ service.icon }}</div>
       <h1 class="title">{{ service.title }}</h1>
       <p>{{ service.description }}</p>
     </div>
@@ -20,58 +20,58 @@
       >
         <button class="close-button" @click="closeModal">&times;</button>
         <div class="modal-icon animate-3d">{{ modalService.icon }}</div>
-        <h2>{{ modalService.title }}</h2>
-        <p>{{ modalService.fullDescription }}</p>
+        <h2 class="modal-title">{{ modalService.title }}</h2>
+        <p class="modal-description">{{ modalService.fullDescription }}</p>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, nextTick } from "vue";
+import { ref, onMounted, nextTick } from 'vue';
 
 const services = [
   {
-    title: "Webontwikkeling",
-    description: "Ontwikkelen van responsieve en robuuste websites.",
-    icon: "🌐",
+    title: 'Webontwikkeling',
+    description: 'Ontwikkelen van responsieve en robuuste websites.',
+    icon: '🌐',
     fullDescription:
-      "Wij zijn gespecialiseerd in het bouwen van schaalbare, SEO-vriendelijke en visueel aantrekkelijke websites die volledig zijn afgestemd op jouw bedrijfsdoelen. Onze weboplossingen zorgen voor optimale prestaties op elk apparaat, zodat jouw online aanwezigheid sterk en gebruiksvriendelijk is.",
+      'Wij zijn gespecialiseerd in het bouwen van schaalbare, SEO-vriendelijke en visueel aantrekkelijke websites die volledig zijn afgestemd op jouw bedrijfsdoelen. Onze weboplossingen zorgen voor optimale prestaties op elk apparaat, zodat jouw online aanwezigheid sterk en gebruiksvriendelijk is.',
   },
   {
-    title: "Mobiele Apps",
-    description: "Ontwikkelen van gebruiksvriendelijke mobiele applicaties.",
-    icon: "📱",
+    title: 'Mobiele Apps',
+    description: 'Ontwikkelen van gebruiksvriendelijke mobiele applicaties.',
+    icon: '📱',
     fullDescription:
-      "Ons team ontwikkelt krachtige mobiele apps met naadloze gebruikerservaringen, gericht op zowel Android- als iOS-platforms. Van concept tot publicatie zorgen wij ervoor dat jouw app gebruiksvriendelijk, intuïtief en geoptimaliseerd is voor maximale prestaties.",
+      'Ons team ontwikkelt krachtige mobiele apps met naadloze gebruikerservaringen, gericht op zowel Android- als iOS-platforms. Van concept tot publicatie zorgen wij ervoor dat jouw app gebruiksvriendelijk, intuïtief en geoptimaliseerd is voor maximale prestaties.',
   },
   {
-    title: "UI/UX Ontwerp",
-    description: "Creëren van boeiende gebruikerservaringen.",
-    icon: "🎨",
+    title: 'UI/UX Ontwerp',
+    description: 'Creëren van boeiende gebruikerservaringen.',
+    icon: '🎨',
     fullDescription:
-      "Wij richten ons op het ontwerpen van intuïtieve UI/UX-interfaces die zorgen voor een aantrekkelijke en gebruiksvriendelijke ervaring. Ons ontwerpteam werkt nauw samen met jou om de perfecte balans te vinden tussen esthetiek en functionaliteit, zodat jouw digitale product naadloos aansluit bij de behoeften van jouw gebruikers.",
+      'Wij richten ons op het ontwerpen van intuïtieve UI/UX-interfaces die zorgen voor een aantrekkelijke en gebruiksvriendelijke ervaring. Ons ontwerpteam werkt nauw samen met jou om de perfecte balans te vinden tussen esthetiek en functionaliteit, zodat jouw digitale product naadloos aansluit bij de behoeften van jouw gebruikers.',
   },
   {
-    title: "SEO Optimalisatie",
-    description: "Verbeteren van zichtbaarheid in zoekmachines.",
-    icon: "🚀",
+    title: 'SEO Optimalisatie',
+    description: 'Verbeteren van zichtbaarheid in zoekmachines.',
+    icon: '🚀',
     fullDescription:
-      "Onze SEO-diensten helpen jouw website hoger te scoren in zoekmachines zoals Google, wat resulteert in meer organisch verkeer en een grotere online zichtbaarheid. We implementeren strategieën op maat, zoals technische optimalisaties, contentcreatie en linkbuilding, om jouw bedrijf te laten opvallen in de zoekresultaten.",
+      'Onze SEO-diensten helpen jouw website hoger te scoren in zoekmachines zoals Google, wat resulteert in meer organisch verkeer en een grotere online zichtbaarheid. We implementeren strategieën op maat, zoals technische optimalisaties, contentcreatie en linkbuilding, om jouw bedrijf te laten opvallen in de zoekresultaten.',
   },
   {
-    title: "Cloudoplossingen",
-    description: "Implementeren van schaalbare cloudinfrastructuren.",
-    icon: "☁️",
+    title: 'Cloudoplossingen',
+    description: 'Implementeren van schaalbare cloudinfrastructuren.',
+    icon: '☁️',
     fullDescription:
-      "Wij bieden betrouwbare en schaalbare cloudoplossingen die de prestaties van jouw bedrijf naar een hoger niveau tillen. Of het nu gaat om dataopslag, serverbeheer of cloudmigratie, wij zorgen voor veilige en efficiënte cloudinfrastructuren die voldoen aan jouw bedrijfsbehoeften. Onze cloudoplossingen zorgen ervoor dat jouw applicaties soepel draaien en eenvoudig kunnen worden opgeschaald bij groei.",
+      'Wij bieden betrouwbare en schaalbare cloudoplossingen die de prestaties van jouw bedrijf naar een hoger niveau tillen. Of het nu gaat om dataopslag, serverbeheer of cloudmigratie, wij zorgen voor veilige en efficiënte cloudinfrastructuren die voldoen aan jouw bedrijfsbehoeften. Onze cloudoplossingen zorgen ervoor dat jouw applicaties soepel draaien en eenvoudig kunnen worden opgeschaald bij groei.',
   },
   {
-    title: "IT-Consultancy",
-    description: "Verstrekken van strategisch IT-advies.",
-    icon: "💡",
+    title: 'IT-Consultancy',
+    description: 'Verstrekken van strategisch IT-advies.',
+    icon: '💡',
     fullDescription:
-      "Wij bieden strategisch IT-advies om jouw bedrijf te helpen slimme technologische beslissingen te nemen. Of het nu gaat om het optimaliseren van bestaande systemen, het implementeren van nieuwe technologieën of het waarborgen van IT-beveiliging, ons team van experts staat klaar om jou te ondersteunen. We helpen je bij het opstellen van een toekomstbestendige IT-strategie die jouw bedrijfsdoelstellingen ondersteunt.",
+      'Wij bieden strategisch IT-advies om jouw bedrijf te helpen slimme technologische beslissingen te nemen. Of het nu gaat om het optimaliseren van bestaande systemen, het implementeren van nieuwe technologieën of het waarborgen van IT-beveiliging, ons team van experts staat klaar om jou te ondersteunen. We helpen je bij het opstellen van een toekomstbestendige IT-strategie die jouw bedrijfsdoelstellingen ondersteunt.',
   },
 ];
 
@@ -96,11 +96,11 @@ const closeModal = () => {
 };
 
 onMounted(() => {
-  const cards = document.querySelectorAll(".service-card");
+  const cards = document.querySelectorAll('.service-card');
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
-        entry.target.classList.add("visible");
+        entry.target.classList.add('visible');
         observer.unobserve(entry.target);
       }
     });
@@ -135,11 +135,16 @@ onMounted(() => {
   opacity: 0;
   transform: scale(1) translateY(50px) rotate(0deg);
   cursor: pointer;
-
   transition: transform 0.5s ease, box-shadow 0.5s ease, opacity 1s ease;
 }
 
 .service-cards-container .service-card:hover {
+  transform: scale(1.02) translateY(-10px); /* Increase size significantly */
+  box-shadow: 0 25px 45px rgba(131, 90, 255, 0.4); /* Bigger shadow */
+  z-index: 2; /* Bring it to the front */
+}
+
+.service-cards-container .service-card:focus {
   transform: scale(1.02) translateY(-10px); /* Increase size significantly */
   box-shadow: 0 25px 45px rgba(131, 90, 255, 0.4); /* Bigger shadow */
   z-index: 2; /* Bring it to the front */
@@ -203,6 +208,7 @@ onMounted(() => {
   max-width: 600px;
   text-align: center;
   position: relative;
+  margin: 0 20px;
 }
 
 /* Elegant Pop-up Animation */
@@ -266,5 +272,27 @@ onMounted(() => {
   background-clip: text; /* Standard background clip */
   color: transparent; /* Make text color transparent to show gradient */
   font-size: 24px;
+}
+
+.modal-title {
+  background: linear-gradient(
+    135deg,
+    #8d3dd3,
+    #e27cb2,
+    #3fabf2
+  ); /* Gradient colors */
+  -webkit-background-clip: text; /* Clip the background to text for Webkit browsers */
+  background-clip: text; /* Standard background clip */
+  color: transparent; /* Make text color transparent to show gradient */
+  font-size: 24px;
+  font-size: 26px;
+  letter-spacing: 0.5px;
+  font-weight: 900;
+}
+
+.modal-description {
+  color: black;
+  letter-spacing: 0.5px;
+  font-weight: 700;
 }
 </style>

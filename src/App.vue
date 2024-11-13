@@ -1,9 +1,12 @@
 <template>
   <div id="app">
     <Navbar />
-    <HomeSection />
-    <AboutSection />
-    <ContactSection />
+    <div class="page-container" ref="scrollContainer">
+      <div class="section" id="homeSection"><HomeSection /></div>
+      <div class="section scrollable" id="aboutSection"><AboutSection /></div>
+      <div class="section" id="contactSection"><ContactSection /></div>
+    </div>
+    <Footer />
     <button
       v-show="showScrollTopButton"
       @click="scrollToTop"
@@ -17,10 +20,12 @@
 
 <script>
 import { ref, onMounted, onBeforeUnmount } from 'vue';
+import { useHead } from '@vueuse/head';
 import Navbar from './components/Navbar.vue';
 import HomeSection from './components/HomeSection.vue';
 import ContactSection from './components/ContactSection.vue';
 import AboutSection from './components/AboutSection.vue';
+import Footer from './components/Footer.vue';
 import './assets/styles/fonts.css';
 
 export default {
@@ -30,6 +35,7 @@ export default {
     HomeSection,
     ContactSection,
     AboutSection,
+    Footer,
   },
   setup() {
     // Correctly define reactive variables and lifecycle hooks within setup()
@@ -62,6 +68,46 @@ export default {
     return { showScrollTopButton, scrollToTop };
   },
 };
+useHead({
+  title: 'Webgrind - Software Development & IT Solutions',
+  meta: [
+    {
+      name: 'description',
+      content:
+        'Your one-stop shop for software development, mobile apps, and IT infrastructure services.',
+    },
+    {
+      property: 'og:title',
+      content: 'Webgrind - Software Development & IT Solutions',
+    },
+    {
+      property: 'og:description',
+      content:
+        'Your one-stop shop for software development, mobile apps, and IT infrastructure services.',
+    },
+    {
+      property: 'og:image',
+      content: 'https://webgrind.nl/img/webgrindlogonotext.d5e9d888.svg',
+    }, // Replace with your logo image URL
+    { property: 'og:url', content: 'https://www.webgrind.nl' },
+  ],
+  script: [
+    {
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify({
+        '@context': 'http://schema.org',
+        '@type': 'WebSite',
+        name: 'Webgrind',
+        url: 'https://www.webgrind.nl',
+        potentialAction: {
+          '@type': 'SearchAction',
+          target: 'https://www.webgrind.nl/search?q={search_term_string}',
+          'query-input': 'required name=search_term_string',
+        },
+      }),
+    },
+  ],
+});
 </script>
 
 <style>
@@ -79,6 +125,27 @@ body {
   background-attachment: fixed; /* Keeps the background fixed when scrolling */
   background-size: cover; /* Ensures the background covers the whole screen */
   font-family: 'Webgrind', Arial, sans-serif; /* Apply custom font globally */
+
+  overflow: hidden; /* Prevent free scrolling */
+}
+
+.page-container {
+  height: 100vh; /* Full viewport height for each section */
+  overflow-y: auto; /* Enable vertical scrolling */
+  scroll-snap-type: y mandatory; /* Enable scroll-snap for vertical scrolling */
+  scroll-behavior: smooth; /* Smooth scroll */
+}
+
+.section {
+  height: 100vh; /* Each section takes full viewport height */
+  scroll-snap-align: start; /* Align sections to the top of the viewport */
+}
+
+.section.scrollable {
+  overflow-y: auto;
+  max-height: 100vh; /* Allow scroll but limited */
+  padding-bottom: 50px;
+  padding-top: 50px;
 }
 
 #app {
