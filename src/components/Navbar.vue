@@ -17,11 +17,17 @@
         class="burger"
         @click="toggleMenu"
         aria-controls="navbar-content"
-        aria-expanded="menuOpen"
+        :aria-expanded="menuOpen.toString()"
       >
-        <span class="burger-line"></span>
-        <span class="burger-line"></span>
-        <span class="burger-line"></span>
+        <span
+          :class="{ 'burger-line': true, 'line-1': true, active: menuOpen }"
+        ></span>
+        <span
+          :class="{ 'burger-line': true, 'line-2': true, active: menuOpen }"
+        ></span>
+        <span
+          :class="{ 'burger-line': true, 'line-3': true, active: menuOpen }"
+        ></span>
       </button>
       <div
         :class="{ 'nav-links': true, 'nav-active': menuOpen }"
@@ -40,14 +46,19 @@
   </nav>
 </template>
 
-<script setup>
-import { ref } from 'vue';
-
-const menuOpen = ref(false);
-
-function toggleMenu() {
-  menuOpen.value = !menuOpen.value;
-}
+<script>
+export default {
+  data() {
+    return {
+      menuOpen: false,
+    };
+  },
+  methods: {
+    toggleMenu() {
+      this.menuOpen = !this.menuOpen;
+    },
+  },
+};
 </script>
 
 <style scoped>
@@ -136,27 +147,83 @@ body,
   width: 100%;
 }
 
-/* Burger Menu Styling */
-.burger {
-  display: none;
-  cursor: pointer;
-  flex-direction: column;
-  justify-content: space-around;
-  width: 30px;
-  height: 21px;
-  background: none;
-  border: none;
-}
+@media screen and (max-width: 768px) {
+  /* Burger Menu Styling */
+  .burger {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 35px;
+    height: 30px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    position: relative;
+    z-index: 10;
+    transition: transform 0.5s ease-in-out;
+  }
 
-.burger-line {
-  width: 100%;
-  height: 3px;
-  background: #ffffff;
-  transition: all 0.3s ease-in-out;
-}
+  /* Hamburger Lines */
+  .burger-line {
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(135deg, #9a4fda, #e89ac4, #7cc4f5);
+    border-radius: 2px;
+    position: relative;
+    transition: transform 0.9s ease-in-out,
+      /* Smooth transformation for all lines */ opacity 0.9s ease-in-out,
+      /* Smooth opacity transition */ background-color 0.9s ease-in-out; /* Smooth color transition */
+    will-change: transform, opacity, background-color; /* Hint the browser to optimize */
+  }
 
-.burger:hover .burger-line {
-  background: #5ec8f7;
+  /* Line 1 Animation (Top Line) */
+  .line-1.active {
+    transform: translateY(11px) rotate(50deg); /* Move down and rotate */
+    background: linear-gradient(
+      -135deg,
+      #9a4fda,
+      #e89ac4,
+      #7cc4f5
+    ); /* Optional: Change color */
+  }
+
+  /* Line 2 Animation (Middle Line) */
+  .line-2.active {
+    opacity: 0; /* Fades out */
+  }
+
+  /* Line 3 Animation (Bottom Line) */
+  .line-3.active {
+    transform: translateY(-15px) rotate(-50deg); /* Move up and rotate */
+    background: linear-gradient(
+      135deg,
+      #9a4fda,
+      #e89ac4,
+      #7cc4f5
+    ); /* Optional: Change color */
+  }
+
+  /* .burger.active {
+    transform: rotate(
+      180deg
+    );
+  } */
+
+  /* Hover Effect for Futuristic Feel */
+  .burger:hover .burger-line {
+    background: linear-gradient(
+      135deg,
+      #9a4fda,
+      #e89ac4,
+      #7cc4f5
+    ); /* Neon-like color on hover */
+    box-shadow: 0 0 15px rgba(154, 79, 218, 0.8),
+      /* Purple from gradient */ 0 0 20px rgba(232, 154, 196, 0.6),
+      /* Pinkish from gradient */ 0 0 25px rgba(124, 196, 245, 0.6); /* Light Blue from gradient */
+    transition: box-shadow 0.05s ease-in-out,
+      /* Smooth box-shadow transition */ background-color 0.1s ease-in-out; /* Smooth background-color change */
+  }
 }
 
 /* Mobile & Dynamic Island Support */
@@ -167,15 +234,14 @@ body,
 
   .nav-links {
     position: absolute;
-    top: 50px;
+    top: 0px;
     left: 0;
     width: 100%;
     height: 0;
     overflow: hidden;
-    background: rgba(0, 0, 0, 0.9);
     flex-direction: column;
     align-items: center;
-    transition: transform 0.5s ease;
+    transition: transform 0.5s ease, backdrop-filter 0.05s ease;
   }
 
   .nav-links ul {
@@ -184,9 +250,11 @@ body,
   }
 
   .nav-links.nav-active {
-    height: auto;
+    backdrop-filter: blur(5px);
+    height: 100vh;
     transform: translateY(0%);
     opacity: 1;
+    justify-content: center;
   }
 }
 </style>
